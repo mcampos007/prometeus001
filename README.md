@@ -8,7 +8,7 @@
 - Permitir cambiar la capacidad_maxima y los credito requeridos para la clase
 - Permitir cambiar el estado de la clase (Pendiente, iniciada, finaliza, Inactiva)
 - Definir una acción para visualizar los socios registrados en la clase y en esta vista poder agregar o quitas socios a la clase.
-- Cuando
+- Cuando.....
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
