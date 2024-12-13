@@ -44,6 +44,8 @@
             <x-primary-button class="ms-3">
                 {{ __('Ingresar') }}
             </x-primary-button>
+
+
         </div>
     </form>
 </x-guest-layout>

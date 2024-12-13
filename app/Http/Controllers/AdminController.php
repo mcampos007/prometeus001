@@ -10,6 +10,7 @@ use App\Models\WorkDay;
 use App\Models\ClassRegistration;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller {
     //
@@ -82,6 +83,7 @@ class AdminController extends Controller {
     //Add Profe
 
     public function addProfes() {
+
         return view( 'admin.add-profes' );
     }
 
@@ -134,6 +136,25 @@ class AdminController extends Controller {
         // Redirigir con un mensaje de éxito
         return redirect()->route( 'list-profes' )->with( 'success', 'Profesor actualizado exitosamente' );
     }
+
+    public function deleteProfe($id)
+{
+    try {
+        $profe = User::findOrFail($id);
+
+        if ($profe) {
+            $profe->delete();
+            return redirect()
+                ->route('list-profes') // Ruta a la lista de profesores
+                ->with('success', 'El profesor se eliminó correctamente.');
+        }
+    } catch (\Exception $e) {
+        return redirect()
+            ->route('list-profes') // Ruta a la lista de profesores
+            ->with('error', 'Hubo un problema al intentar eliminar el profesor.');
+    }
+}
+
 
     // Mostrar lista de Clases
 

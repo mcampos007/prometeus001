@@ -1,58 +1,69 @@
 <x-app-layout>
-    <x-guest-layout>
-        <x-slot name="header">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Editar Profesor') }}
-            </h2>
-        </x-slot>
 
-        @if (session('success'))
-            <div class="p-4 mb-4 text-green-700 bg-green-100 rounded-lg">
-                {{ session('success') }}
-            </div>
-        @endif
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-[#f39c12] leading-tight text-center">
+            {{ __('Editar Profesor') }}
+        </h2>
+    </x-slot>
 
-        @if ($errors->any())
-            <div class="p-4 mb-4 text-red-700 bg-red-100 rounded-lg">
-                @foreach ($errors->all() as $error)
-                    <p>{{ $error }}</p>
-                @endforeach
-            </div>
-        @endif
-
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
-                <form id="edit-profesor-form" method="POST" action="{{ route('update-profesor', $user->id) }}">
-                    @csrf
-                    @method('PUT')
-
-                    <div class="flex items-center justify-end mt-4">
-                        <x-input-label for="name" :value="__('Nombre:')" />
-                        <x-text-input id="name" class="block mt-1 w-full" type="text" name="name"
-                            value="{{ old('name', $user->name) }}" required autofocus autocomplete="username" />
-                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
-                    </div>
-
-                    <div class="flex items-center justify-end mt-4">
-                        <x-input-label for="email" :value="__('Email:')" />
-                        <x-text-input id="email" class="block mt-1 w-full" type="email" name="email"
-                            value="{{ old('email', $user->email) }}" required autofocus autocomplete="username" />
-                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                    </div>
-
-                    <div class="flex items-center justify-end mt-4">
-                        <a href="{{ route('list-profes') }}">
-                            <x-secondary-button class="ms-3">
-                                {{ __('Cancelar') }}
-                            </x-secondary-button>
-                        </a>
-
-                        <x-primary-button class="ms-3">
-                            {{ __('Guardar Cambios') }}
-                        </x-primary-button>
-                    </div>
-                </form>
-            </div>
+    {{-- Mensaje de éxito --}}
+    @if (session('success'))
+        <div class="p-4 mb-6 text-sm text-green-400 bg-green-900 border border-green-400 rounded-lg shadow">
+            {{ session('success') }}
         </div>
-    </x-guest-layout>
+    @endif
+
+    {{-- Mensajes de error --}}
+    @if ($errors->any())
+        <div class="p-4 mb-6 text-sm text-red-400 bg-red-900 border border-red-400 rounded-lg shadow">
+            @foreach ($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
+
+    <div class="py-12">
+        <div class="form-container">
+            <form id="edit-profesor-form" method="POST" action="{{ route('update-profesor', $user->id) }}">
+                @csrf
+                @method('PUT')
+
+                <div class="mb-6">
+                    <label for="name" class="block text-sm font-medium  text-[#f39c12] ">
+                        {{--  --}}
+                        {{ __('Nombre') }}
+                    </label>
+                    <input id="name" class="input-primary mt-2 bg-gray-700" type="text" name="name"
+                        value="{{ old('name', $user->name) }}" required autofocus autocomplete="username" />
+                    @error('name')
+                        <p class="text-red-400 text-sm mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="mb-6">
+                    <label for="email" class="block text-sm font-medium text-[#f39c12]"> {{ __('Email') }}
+                    </label>
+                    <input id="email" class="input-primary mt-2 bg-gray-700" type="email" name="email"
+                        value="{{ old('email', $user->email) }}" required autofocus autocomplete="username" />
+                    @error('email')
+                        <p class="text-red-400 text-sm mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="flex items-center justify-center space-x-4">
+                    <a href="{{ route('list-profes') }}"
+                        class="inline-block px-6 py-2 text-sm font-medium text-gray-300 bg-gray-700 border-gray-600 rounded-lg hover:bg-gray-600">
+                        {{ __('Cancelar') }}
+                    </a>
+
+                    <button type="submit"
+                        class="ml-3 bg-[#f39c12] text-white px-6 py-2 rounded-lg font-bold
+                        hover:bg-[#e67e22]">
+                        {{ __('Guardar Cambios') }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </x-app-layout>

@@ -43,6 +43,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/add-new-profe', [AdminController::class, 'addNewProfe'])->name('add-profe');
     Route::get('/admin/edit-profes/{id}', [AdminController::class, 'editProfes'])->name('view-edit-profes');
     Route::put('/admin/profesores/{id}', [AdminController::class, 'updateProfe'])->name('update-profesor');
+    Route::delete('/admin/delete-profes/{id}', [AdminController::class, 'deleteProfe'])->name('admin.delete-profe');
     //Clases
     Route::get('/clases', [AdminController::class, 'listClases'])->name('admin.list-clases');
     Route::get('/clases/socios/{id}',[AdminController::class, 'sociosEnClase'])->name('admin.socios-en-clase');
