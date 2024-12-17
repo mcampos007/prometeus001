@@ -38,4 +38,8 @@ class Clase extends Model {
     public function class_Registrations() {
         return $this->hasMany( ClassRegistration::class, 'clase_id' );
     }
+
+    public function getHorarioFormattedAttribute() {
+        return \Carbon\Carbon::parse( $this->horario )->format( 'H:i' );
+    }
 }

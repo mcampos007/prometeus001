@@ -9,13 +9,6 @@ use App\Models\User;
 class WorkDayController extends Controller {
     //
 
-    /* public function __construct() {
-        $this->middleware( 'auth' );
-        // Asegura que el usuario esté autenticado
-        $this->middleware( 'can:admin-only' );
-        // Permite solo a administradores
-    } */
-
     public function index()
     {
 
@@ -111,6 +104,18 @@ $request->merge([
 }
 
     // Métodos  , y destroy aquí
+
+    public function destroy($id)
+    {
+        // Buscar el registro de WorkDay por su ID
+        $workDay = WorkDay::findOrFail($id);
+
+        // Eliminar el registro
+        $workDay->delete();
+
+        // Redirigir al índice con un mensaje de éxito
+        return redirect()->route('work_days.index')->with('success', 'Día de trabajo eliminado correctamente.');
+    }
 
 
 }

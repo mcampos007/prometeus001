@@ -36,6 +36,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/add-credits/socio/{id}', [AdminController::class, 'showAddCreditsSocioForm'])->name('admin.show-add-credits-socio-form');
     Route::post('/admin/add-credits', [AdminController::class, 'addCredits'])->name('admin.add-credits');
     Route::get('socios', [AdminController::class, 'listSocios'])->name('list-socios');
+    Route::get('admin/add-socios', [AdminController::class, 'addSocios'])->name('add-socios');
+    Route::post('/admin/add-new-socio', [AdminController::class, 'addNewSocio'])->name('add-socio');
     Route::delete('/admin/delete-socio/{id}', [AdminController::class, 'deleteSocio'])->name('admin.delete-socio');
     //Profes
     Route::get('profes', [AdminController::class, 'listProfes'])->name('list-profes');
@@ -48,6 +50,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/clases', [AdminController::class, 'listClases'])->name('admin.list-clases');
     Route::get('/clases/socios/{id}',[AdminController::class, 'sociosEnClase'])->name('admin.socios-en-clase');
     Route::post('/class/{class}/add-member/{member}', [ClassController::class, 'addMember'])->name('class.addMember');
+    Route::delete('/class/{class}/member/{member}', [ClassController::class, 'removeMember'])->name('class.removeMember');
+    Route::post('/class/{class}/start', [ClassController::class, 'start'])->name('class.start');
+    Route::post('/class/{class}/end', [ClassController::class, 'end'])->name('class.end');
+    Route::post('/class/{class}/setPresent/{member}', [ClassController::class, 'setPresent'])->name('class.setPresent');
+
+
 
     //Route::get('/admin/add-clases', [AdminController::class, 'addClases'])->name('add-clases');
     Route::get('/admin/clases/add', [AdminController::class, 'addClases'])->name('admin.add-clases');
@@ -55,6 +63,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     //Rutas para work_days
     Route::resource('work_days', WorkDayController::class);
+
     //Generación de Clases mensuales
     Route::get('/admin/generate-classes', [AdminController::class, 'generateClassesList'])->name('admin.generate-classes');
     Route::post('/admin/generate-classes', [AdminController::class, 'generateClasses'])->name('admin.generate-classes');

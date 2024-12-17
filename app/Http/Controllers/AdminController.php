@@ -35,6 +35,7 @@ class AdminController extends Controller {
 
     public function showAddCreditsForm() {
 
+
         $select_socio_id = 0;
 
         // Obtener todos los usuarios con rol de 'socio'
@@ -61,27 +62,68 @@ class AdminController extends Controller {
     // Mostrar lista de socios
 
     public function listSocios() {
-        $socios = User::where( 'role', 'socio' )->orderBy( 'name' )->get();
-
-        // // Asegúrate de convertir credit_vto a un objeto Carbon
-        // foreach ( $socios as $socio ) {
-        //     if ( $socio->credit_vto ) {
-        //         $socio->credit_vto = \Carbon\Carbon::parse( $socio->credit_vto );
-        //     }
-        // }
-        // Ordenar alfabéticamente por nombre
+         // Paginar con 10 registros por página
+        $socios = User::where('role', 'socio')
+        ->orderBy('name')
+        ->paginate(10);
         return view( 'admin.socios', compact( 'socios' ) );
     }
 
-    //Mostrar Lista de Profesora
+    public function deleteSocio($id)
+    {
+        try {
+            $profe = User::findOrFail($id);
 
+            if ($profe) {
+                $profe->delete();
+                return redirect()
+                    ->route('list-socios') // Ruta a la lista de profesores
+                    ->with('success', 'El socio se eliminó correctamente.');
+            }
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('list-socios') // Ruta a la lista de profesores
+                ->with('error', 'Hubo un problema al intentar eliminar el socio.');
+        }
+    }
+
+      //Add Profe
+    public function addSocios() {
+
+        return view( 'admin.add-socios' );
+    }
+
+    public function addNewSocio( Request $request ) {
+
+        // Validación de los datos del formulario
+        $validatedData = $request->validate( [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            // 'password' => 'required|string|min:8|confirmed', // Si tienes campo de confirmación
+        ] );
+
+        // Crear el usuario con los datos validados
+        $user = User::create( [
+            'name' => $validatedData[ 'name' ],
+            'email' => $validatedData[ 'email' ],
+            'password' => Hash::make( 'password' ),
+            'role' => 'socio', // Rol predeterminado
+            'credits' => 0, // Opcional: inicializar en 0 u otro valor si es necesario
+            'credit_vto' => now()->addMonths( 1 ), // Ejemplo de vencimiento de crédito en 1 mes
+        ] );
+
+        // Redirigir o devolver respuesta
+        return redirect()->route( 'list-socios' )->with( 'success', 'El Socio ha sido creado con éxito.' );
+
+    }
+
+    //Mostrar Lista de Profesora
     public function listProfes() {
         $profes = User::where( 'role', 'profesor' )->orderBy( 'name' )->get();
         return view( 'admin.profes', compact( 'profes' ) );
     }
 
     //Add Profe
-
     public function addProfes() {
 
         return view( 'admin.add-profes' );
@@ -137,23 +179,22 @@ class AdminController extends Controller {
         return redirect()->route( 'list-profes' )->with( 'success', 'Profesor actualizado exitosamente' );
     }
 
-    public function deleteProfe($id)
-{
-    try {
-        $profe = User::findOrFail($id);
+    public function deleteProfe($id){
+        try {
+            $profe = User::findOrFail($id);
 
-        if ($profe) {
-            $profe->delete();
+            if ($profe) {
+                $profe->delete();
+                return redirect()
+                    ->route('list-profes') // Ruta a la lista de profesores
+                    ->with('success', 'El profesor se eliminó correctamente.');
+            }
+        } catch (\Exception $e) {
             return redirect()
                 ->route('list-profes') // Ruta a la lista de profesores
-                ->with('success', 'El profesor se eliminó correctamente.');
+                ->with('error', 'Hubo un problema al intentar eliminar el profesor.');
         }
-    } catch (\Exception $e) {
-        return redirect()
-            ->route('list-profes') // Ruta a la lista de profesores
-            ->with('error', 'Hubo un problema al intentar eliminar el profesor.');
     }
-}
 
 
     // Mostrar lista de Clases
@@ -315,8 +356,10 @@ class AdminController extends Controller {
 
     public function sociosEnClase( $id ) {
         $class = Clase::with('class_Registrations')->findOrFail($id);
+
         $maxCapacity = $class->capacidad_maxima;
        // $socios = User::where('role', 'socio')->get();
+
        $availableMembers = User::where('role', 'socio')
     ->where('credits', '>=', $class->creditos_requeridos)  // Verificar si el socio tiene suficientes créditos
     ->whereDoesntHave('class_registrations', function ($query) use ($id) {
@@ -328,5 +371,6 @@ class AdminController extends Controller {
 
 
     }
+
 
 }

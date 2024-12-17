@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Clase;
 use App\Models\User;
+use App\Models\ClassRegistration;
 
 use Illuminate\Http\Request;
 
@@ -34,6 +35,70 @@ class ClassController extends Controller {
         }
 
         return redirect()->back()->with( 'error', 'No se pudo inscribir al socio.' );
+    }
+
+    public function removeMember( $classId, $memberId ) {
+
+        $registration = ClassRegistration::where( 'clase_id', $classId )
+        ->where( 'socio_id', $memberId )
+        ->firstOrFail();
+
+        $registration->delete();
+
+        return redirect()->back()->with( 'success', 'El socio ha sido quitado de la clase.' );
+    }
+
+    // Iniciar la clase
+
+    public function start( $classId ) {
+        $class = Clase::findOrFail( $classId );
+
+        if ( $class->estado === 'pendiente' ) {
+            $class->estado = 'iniciada';
+            $class->save();
+
+            return redirect()->back()->with( 'success', 'La clase ha sido iniciada.' );
+        }
+
+        return redirect()->back()->with( 'error', 'No se puede iniciar la clase. Verifique el estado actual.' );
+    }
+
+    public function end( $classId ) {
+        $class = Clase::findOrFail( $classId );
+
+        if ( $class->estado === 'iniciada' ) {
+            $class->estado = 'finalizada';
+            $class->save();
+
+            return redirect()->back()->with( 'success', 'La clase ha sido fnalizada.' );
+        }
+
+        return redirect()->back()->with( 'error', 'No se puede finalizar la clase. Verifique el estado actual.' );
+    }
+
+    //Marcar soio como presenta
+
+    public function setPresent( $classId, $memberId ) {
+        try {
+            // Encuentra la inscripción del socio a la clase
+            $registration = ClassRegistration::where( 'clase_id', $classId )
+            ->where( 'socio_id', $memberId )
+            ->firstOrFail();
+
+            // Verifica si ya está presente
+            if ( $registration->estado_inscripcion === 'presente' ) {
+                return redirect()->back()->with( 'info', 'El socio ya está marcado como presente.' );
+            }
+
+            // Actualiza el estado a presente
+            $registration->update( [ 'estado_inscripcion' => 'presente' ] );
+
+            return redirect()->back()->with( 'success', 'El socio se registró como presente.' );
+
+        } catch ( \Exception $e ) {
+            // Manejo de errores
+            return redirect()->back()->with( 'error', 'Ocurrió un problema al registrar el socio como presente.' );
+        }
     }
 
 }
