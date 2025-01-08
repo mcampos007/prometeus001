@@ -27,7 +27,8 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+           // 'email' => ['required', 'string', 'email'],
+            'dni' => ['required', 'exists:users,dni'], // Validar que el DNI exista en la tabla users
             'password' => ['required', 'string'],
         ];
     }
@@ -41,11 +42,20 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        // if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        //     RateLimiter::hit($this->throttleKey());
+
+        //     throw ValidationException::withMessages([
+        //         'email' => trans('auth.failed'),
+        //     ]);
+        // }
+
+        // Autenticar usando DNI
+        if (!Auth::attempt($this->only('dni', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'dni' => __('Estas credenciales no coinciden con nuestros registros.'),
             ]);
         }
 

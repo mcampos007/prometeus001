@@ -17,6 +17,7 @@ class UserSeeder extends Seeder {
         // Usuario con rol de administrador
         User::create( [
             'name' => 'Admin',
+            'dni' => '17792794',
             'email' => 'admin@example.com',
             'password' => Hash::make( 'password' ), // Cambia la contraseña según prefieras
             'role' => 'administrador',
@@ -27,6 +28,7 @@ class UserSeeder extends Seeder {
         // Usuario con rol de socio
         User::create( [
             'name' => 'socio',
+            'dni' => '111111',
             'email' => 'socio@example.com',
             'password' => Hash::make( 'password' ),
             'role' => 'socio',
@@ -37,6 +39,7 @@ class UserSeeder extends Seeder {
         // Usuario con rol de profesor
         User::create( [
             'name' => 'profesor',
+            'dni' => '222222',
             'email' => 'profesor@example.com',
             'password' => Hash::make( 'password' ),
             'role' => 'profesor',
@@ -47,6 +50,7 @@ class UserSeeder extends Seeder {
         // Usuario con rol de profesor
         User::create( [
             'name' => 'profesor1',
+            'dni' => '333333',
             'email' => 'profesor1@example.com',
             'password' => Hash::make( 'password' ),
             'role' => 'profesor',
