@@ -35,7 +35,6 @@ class AdminController extends Controller {
 
     public function showAddCreditsForm() {
 
-
         $select_socio_id = 0;
 
         // Obtener todos los usuarios con rol de 'socio'
@@ -134,6 +133,7 @@ class AdminController extends Controller {
         // Validación de los datos del formulario
         $validatedData = $request->validate( [
             'name' => 'required|string|max:255',
+            'dni' => 'required|string|max:20|unique:users,dni',
             'email' => 'required|string|email|max:255|unique:users',
             // 'password' => 'required|string|min:8|confirmed', // Si tienes campo de confirmación
         ] );
@@ -141,6 +141,7 @@ class AdminController extends Controller {
         // Crear el usuario con los datos validados
         $user = User::create( [
             'name' => $validatedData[ 'name' ],
+            'dni' => $validatedData[ 'dni' ],
             'email' => $validatedData[ 'email' ],
             'password' => Hash::make( 'password' ),
             'role' => 'profesor', // Rol predeterminado
@@ -165,6 +166,7 @@ class AdminController extends Controller {
         // Validación de los datos
         $request->validate( [
             'name' => 'required|string|max:255',
+            'dni' => 'required|string|max:20|unique:users,dni,' . $id,
             'email' => 'required|email|max:255|unique:users,email,' . $id,
         ] );
 
@@ -172,6 +174,7 @@ class AdminController extends Controller {
         $profesor = User::findOrFail( $id );
         $profesor->update( [
             'name' => $request->input( 'name' ),
+            'dni' => $request->input( 'dni' ),
             'email' => $request->input( 'email' ),
         ] );
 
@@ -215,7 +218,6 @@ class AdminController extends Controller {
             ->whereDate('horario', $today)
             ->orderBy('horario', 'asc') // Ordenar por horario en orden ascendente
             ->get();
-        //dd($clases);
         // Retornar la vista con la lista de clases
         return view( 'admin.list-clases', compact( 'clases' ) );
     }
@@ -361,13 +363,14 @@ class AdminController extends Controller {
        // $socios = User::where('role', 'socio')->get();
 
        $availableMembers = User::where('role', 'socio')
-    ->where('credits', '>=', $class->creditos_requeridos)  // Verificar si el socio tiene suficientes créditos
-    ->whereDoesntHave('class_registrations', function ($query) use ($id) {
-        $query->where('clase_id', $id);  // Excluir socios ya registrados en la clase
-    })
-    ->get();
+       ->where('credit_vto', '>=', Carbon::now())
+        ->where('credits', '>=', $class->creditos_requeridos)  // Verificar si el socio tiene suficientes créditos
+        ->whereDoesntHave('class_registrations', function ($query) use ($id) {
+            $query->where('clase_id', $id);  // Excluir socios ya registrados en la clase
+        })
+        ->get();
 
-    return view('classes.manage-members', compact('class', 'availableMembers'));
+        return view('classes.manage-members', compact('class', 'availableMembers'));
 
 
     }

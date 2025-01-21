@@ -25,7 +25,17 @@
         <div class="form-container">
             <form id="credit-form" method="POST" action="{{ route('add-profe') }}">
                 @csrf
-                {{-- Campo Nombre --}}
+                {{-- Campo dni --}}
+                <div class="mb-6">
+                    <label for="dni" class="block text-sm font-medium text-[#f39c12] ">
+                        {{ __('DNI') }}
+                    </label>
+                    <input id="dni" type="text" name="dni" class="input-primary mt-2  bg-gray-700"
+                        value="{{ old('dni') }}" required autofocus>
+                    @error('dni')
+                        <p class="text-red-400 text-sm mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
 
 
                 {{-- Campo Nombre --}}

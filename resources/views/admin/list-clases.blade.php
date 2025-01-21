@@ -39,6 +39,7 @@
                         {{-- <th class="px-4 py-2">Nombre</th>
                         <th class="px-4 py-2">Profesor</th> --}}
                         <th class="px-4 py-2  text-gray-300 text-center">Horario</th>
+                        <th class="px-4 py-2  text-gray-300 text-center">Profesor</th>
                         <th class="px-4 py-2  text-gray-300 text-center">Cupos Disp.</th>
                         <th class="px-4 py-2  text-gray-300 text-center">Créditos Req.</th>
                         <th class="px-4 py-2  text-gray-300 text-center">Estado</th>
@@ -52,6 +53,9 @@
                             <td class="px-4 py-2">{{ $clase->profesor->name ?? 'Sin asignar' }}</td> --}}
                             <td class="px-4 py-2 border-t border-gray-700 text-left">
                                 {{ $clase->horario->format('H:i') }}</td>
+                            <td class="px-4 py-2 border-t border-gray-700"">
+                                {{ $clase->profesor->name ?? 'Sin asignar' }}
+                            </td>
                             <td class="px-4 py-2 border-t border-gray-700"">
                                 {{ $clase->capacidad_maxima - $clase->class__registrations_count }}
                             </td>

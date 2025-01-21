@@ -7,6 +7,9 @@
         <h2 class="font-semibold text-xl text-[#f39c12] leading-tight text-center mt-2">
             {{ __('Estado de la Clase: ') }}{{ $class->estado }}
         </h2>
+        <h2 class="font-semibold text-xl text-[#f39c12] leading-tight text-center mt-2">
+            {{ __('Profesor: ') }}{{ $class->profesor->name }}
+        </h2>
     </x-slot>
 
     {{-- Mensaje de éxito --}}

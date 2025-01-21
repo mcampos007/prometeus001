@@ -27,6 +27,18 @@
             <form id="edit-profesor-form" method="POST" action="{{ route('update-profesor', $user->id) }}">
                 @csrf
                 @method('PUT')
+                {{-- REgistro del Dni --}}
+                <div class="mb-6">
+                    <label for="dni" class="block text-sm font-medium text-[#f39c12] ">
+                        {{ __('DNI') }}
+                    </label>
+                    <input id="dni" class="input-primary mt-2 bg-gray-700" type="text" name="dni"
+                        value="{{ old('dni', $user->dni) }}" required autofocus>
+                    @error('dni')
+                        <p class="text-red-400 text-sm mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
+
 
                 <div class="mb-6">
                     <label for="name" class="block text-sm font-medium  text-[#f39c12] ">

@@ -29,23 +29,33 @@ class ClassController extends Controller {
 
             // Decrementar los créditos del socio
             //Deshabilitado  Hasta que se confirme la clase
-            //$member->decrement( 'credits', $class->creditos_requeridos );
+            $member->decrement( 'credits', $class->creditos_requeridos );
 
-            return redirect()->back()->with( 'success', 'Socio inscrito exitosamente.' );
+            return redirect()->back()->with( 'success', 'Socio inscripto exitosamente.' );
         }
 
         return redirect()->back()->with( 'error', 'No se pudo inscribir al socio.' );
     }
 
     public function removeMember( $classId, $memberId ) {
-
+        // Buscar la inscripción del socio en la clase
         $registration = ClassRegistration::where( 'clase_id', $classId )
         ->where( 'socio_id', $memberId )
         ->firstOrFail();
 
+        // Restablecer el crédito del socio
+        $user = User::findOrFail( $memberId );
+        $class = Clase::findOrFail( $classId );
+        // Si necesitas obtener los créditos requeridos desde la clase
+
+        // Sumar el crédito restado al inscribirse
+        $user->credits += $class->creditos_requeridos;
+        $user->save();
+
+        // Eliminar el registro de la inscripción
         $registration->delete();
 
-        return redirect()->back()->with( 'success', 'El socio ha sido quitado de la clase.' );
+        return redirect()->back()->with( 'success', 'El socio ha sido quitado de la clase y su crédito ha sido restituido.' );
     }
 
     // Iniciar la clase

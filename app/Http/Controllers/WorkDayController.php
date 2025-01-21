@@ -12,7 +12,9 @@ class WorkDayController extends Controller {
     public function index()
     {
 
-        $workDays = WorkDay::all();
+       // Recuperar los días de trabajo con la relación user
+        $workDays = WorkDay::with('user')->get();
+
         return view('work_days.index', compact('workDays'));
     }
 

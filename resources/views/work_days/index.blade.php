@@ -36,6 +36,7 @@
                             <th class="px-4 py-2 text-center text-gray-300">Activo</th>
                             <th class="px-4 py-2 text-center text-gray-300">Horario de Mañana</th>
                             <th class="px-4 py-2 text-center text-gray-300">Horario de Tarde</th>
+                            <th class="px-4 py-2 text-center text-gray-300">Profesor</th>
                             <th class="px-4 py-2 text-center text-gray-300">Acciones</th>
                         </tr>
                     </thead>
@@ -48,6 +49,8 @@
                                     {{ $workDay->morning_end }}</td>
                                 <td class="px-4 py-2 border-t border-gray-700">{{ $workDay->afternoon_start }} -
                                     {{ $workDay->afternoon_end }}</td>
+                                <td class="px-4 py-2 border-t border-gray-700">
+                                    {{ $workDay->user->name ?? 'No asignado' }}</td>
                                 <td class="px-4 py-2 border-t border-gray-700">
 
                                     <div class="flex space-x-2">
