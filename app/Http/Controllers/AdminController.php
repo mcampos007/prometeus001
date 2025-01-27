@@ -92,29 +92,31 @@ class AdminController extends Controller {
         return view( 'admin.add-socios' );
     }
 
-    public function addNewSocio( Request $request ) {
+    public function addNewSocio(Request $request)
+{
+    // Validación de los datos del formulario
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'dni' => 'required|string|size:8|unique:users', // Validación para DNI
+        // 'password' => 'required|string|min:8|confirmed', // Si tienes campo de confirmación
+    ]);
 
-        // Validación de los datos del formulario
-        $validatedData = $request->validate( [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            // 'password' => 'required|string|min:8|confirmed', // Si tienes campo de confirmación
-        ] );
+    // Crear el usuario con los datos validados
+    $user = User::create([
+        'name' => $validatedData['name'],
+        'email' => $validatedData['email'],
+        'dni' => $validatedData['dni'], // Guardar el DNI
+        'password' => Hash::make($validatedData['dni']), // Hashear el DNI como contraseña
+        'role' => 'socio', // Rol predeterminado
+        'credits' => 0, // Opcional: inicializar en 0 u otro valor si es necesario
+        'credit_vto' => now()->addMonths(1), // Ejemplo de vencimiento de crédito en 1 mes
+    ]);
 
-        // Crear el usuario con los datos validados
-        $user = User::create( [
-            'name' => $validatedData[ 'name' ],
-            'email' => $validatedData[ 'email' ],
-            'password' => Hash::make( 'password' ),
-            'role' => 'socio', // Rol predeterminado
-            'credits' => 0, // Opcional: inicializar en 0 u otro valor si es necesario
-            'credit_vto' => now()->addMonths( 1 ), // Ejemplo de vencimiento de crédito en 1 mes
-        ] );
+    // Redirigir o devolver respuesta
+    return redirect()->route('list-socios')->with('success', 'El Socio ha sido creado con éxito.');
+}
 
-        // Redirigir o devolver respuesta
-        return redirect()->route( 'list-socios' )->with( 'success', 'El Socio ha sido creado con éxito.' );
-
-    }
 
     //Mostrar Lista de Profesora
     public function listProfes() {
