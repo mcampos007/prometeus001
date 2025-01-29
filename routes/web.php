@@ -54,6 +54,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/class/{class}/start', [ClassController::class, 'start'])->name('class.start');
     Route::post('/class/{class}/end', [ClassController::class, 'end'])->name('class.end');
     Route::post('/class/{class}/setPresent/{member}', [ClassController::class, 'setPresent'])->name('class.setPresent');
+    Route::delete('/class/{id}', [ClassController::class, 'destroy'])->name('admin.destroy-clase');
+
 
 
 

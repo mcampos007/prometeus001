@@ -1,5 +1,3 @@
-<!-- resources/views/work_days/create.blade.php -->
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-[#f39c12] leading-tight text-center">
@@ -51,66 +49,90 @@
 
                 <!-- Estado Activo -->
                 <div class="mb-4">
-                    <label for="name" class="block text-sm font-medium  text-[#f39c12] ">
+                    <label for="active" class="block text-sm font-medium text-[#f39c12]">
                         {{ __('¿Activo?') }}
                     </label>
-
                     <input id="active" name="active" type="checkbox" value="1"
-                        class="rounded border-gray-300 bg-gray-700" />
+                        class="rounded border-gray-300 bg-gray-700" {{ old('active', false) ? 'checked' : '' }} />
                 </div>
+
+                <!-- Habilitar horarios de mañana -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-[#f39c12]">
+                        <input type="checkbox" id="enable_morning" name="enable_mornig"
+                            class="mr-2 rounded border-gray-300 bg-gray-700"
+                            {{ old('enable_morning', false) ? 'checked' : '' }}>
+                        {{ __('Habilitar horario de mañana') }}
+                    </label>
+                </div>
+
+
 
                 <!-- Hora de inicio de la mañana -->
                 <div class="mb-4">
-                    <label for="morning_start" class= "block text-sm font-medium  text-[#f39c12] ">
+                    <label for="morning_start" class="block text-sm font-medium text-[#f39c12]">
                         {{ __('Hora de inicio (Mañana)') }}
                     </label>
                     <x-text-input id="morning_start" name="morning_start" type="time"
-                        class="block mt-1 w-full bg-gray-700" value="{{ old('morning_start') }}" required />
+                        class="block mt-1 w-full bg-gray-700" value="{{ old('morning_start') }}" disabled />
                     <x-input-error :messages="$errors->get('morning_start')" class="mt-2" />
                 </div>
 
                 <!-- Hora de fin de la mañana -->
                 <div class="mb-4">
-                    <label for="morning_end" class= "block text-sm font-medium  text-[#f39c12] ">
-                        {{ __('Hora de fin (Mañana') }}
+                    <label for="morning_end" class="block text-sm font-medium text-[#f39c12]">
+                        {{ __('Hora de fin (Mañana)') }}
                     </label>
                     <x-text-input id="morning_end" name="morning_end" type="time"
-                        class="block mt-1 w-full bg-gray-700" value="{{ old('morning_end') }}" required />
+                        class="block mt-1 w-full bg-gray-700" value="{{ old('morning_end') }}" disabled />
                     <x-input-error :messages="$errors->get('morning_end')" class="mt-2" />
+                </div>
+
+                <!-- Habilitar horarios de tarde -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-[#f39c12]">
+                        <input type="checkbox" id="enable_afternoon" class="mr-2 rounded border-gray-300 bg-gray-700"
+                            name="enable_afternoon" {{ old('enable_afternoon', false) ? 'checked' : '' }}>
+                        {{ __('Habilitar horario de tarde') }}
+                    </label>
                 </div>
 
                 <!-- Hora de inicio de la tarde -->
                 <div class="mb-4">
-                    <label for="afternoon_start" class= "block text-sm font-medium  text-[#f39c12] ">
+                    <label for="afternoon_start" class="block text-sm font-medium text-[#f39c12]">
                         {{ __('Hora de inicio (Tarde)') }}
                     </label>
                     <x-text-input id="afternoon_start" name="afternoon_start" type="time"
-                        class="block mt-1 w-full bg-gray-700" value="{{ old('afternoon_start') }}" required />
+                        class="block mt-1 w-full bg-gray-700" value="{{ old('afternoon_start') }}" disabled />
                     <x-input-error :messages="$errors->get('afternoon_start')" class="mt-2" />
                 </div>
 
                 <!-- Hora de fin de la tarde -->
                 <div class="mb-4">
-                    <label for="afternoon_end" class= "block text-sm font-medium  text-[#f39c12] ">
+                    <label for="afternoon_end" class="block text-sm font-medium text-[#f39c12]">
                         {{ __('Hora de fin (Tarde)') }}
                     </label>
                     <x-text-input id="afternoon_end" name="afternoon_end" type="time"
-                        class="block mt-1 w-full bg-gray-700" value="{{ old('morning_end') }}" required />
+                        class="block mt-1 w-full bg-gray-700" value="{{ old('afternoon_end') }}" disabled />
                     <x-input-error :messages="$errors->get('afternoon_end')" class="mt-2" />
                 </div>
 
                 <!-- Profesor -->
                 <div class="mb-4">
-                    <label for="user_id" class= "block text-sm font-medium  text-[#f39c12] ">
+                    <label for="user_id" class="block text-sm font-medium text-[#f39c12]">
                         {{ __('Profesor Asignado') }}
                     </label>
                     <select id="user_id" name="user_id" class="block mt-1 w-full bg-gray-700">
                         @foreach ($profesores as $profesor)
-                            <option value="{{ $profesor->id }}">{{ $profesor->name }}</option>
+                            <option value="{{ $profesor->id }}"
+                                {{ old('user_id') == $profesor->id ? 'selected' : '' }}>
+                                {{ $profesor->name }}
+                            </option>
                         @endforeach
                     </select>
                     <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
                 </div>
+
 
                 <!-- Botones de acción -->
                 <div class="flex justify-end mt-4">
@@ -130,4 +152,16 @@
         </div>
 
     </div>
+
 </x-app-layout>
+
+<script>
+    document.getElementById('enable_morning').addEventListener('change', function() {
+        document.getElementById('morning_start').disabled = !this.checked;
+        document.getElementById('morning_end').disabled = !this.checked;
+    });
+    document.getElementById('enable_afternoon').addEventListener('change', function() {
+        document.getElementById('afternoon_start').disabled = !this.checked;
+        document.getElementById('afternoon_end').disabled = !this.checked;
+    });
+</script>

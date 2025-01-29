@@ -73,7 +73,7 @@
                                     </span>
                                 </a> --}}
                                 <a href="{{ route('admin.socios-en-clase', $clase->id) }}"
-                                    class="bg-blue-500 text-white px-4 py-2 rounded-md font-bold text-xs hover:bg-blue-600 transition duration-150"
+                                    class="bg-blue-500 text-white px-4 py-2 rounded-md font-bold text-xs hover:bg-blue-600 transition duration-150 mr-2"
                                     title="Administrar clase">
                                     <i class="fas fa-users"></i> <!-- Ícono de agregar crédito -->
                                     <!-- Tooltip de Agregar Crédito -->
@@ -81,6 +81,20 @@
                                         class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 text-white bg-black rounded py-1 px-2 text-xs opacity-0 group-hover:opacity-100 transition-opacity">
                                     </span>
                                 </a>
+
+                                <!-- Formulario para eliminar la clase -->
+                                <form action="{{ route('admin.destroy-clase', $clase->id) }}" method="POST"
+                                    class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="bg-red-600 text-white px-4 py-2 rounded-md font-bold text-xs hover:bg-red-700 transition duration-150"
+                                        onclick="return confirm('¿Estás seguro de que deseas eliminar esta clase? Esta acción no se puede deshacer.')"
+                                        title="Eliminar clase">
+                                        <i class="fas fa-trash-alt"></i>
+
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach

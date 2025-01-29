@@ -111,4 +111,11 @@ class ClassController extends Controller {
         }
     }
 
+    public function destroy( $id ) {
+        $clase = Clase::findOrFail( $id );
+        $clase->delete();
+
+        return redirect()->route( 'admin.list-clases' )->with( 'success', 'Clase eliminada correctamente.' );
+    }
+
 }
