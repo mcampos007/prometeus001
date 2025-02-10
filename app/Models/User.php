@@ -51,4 +51,10 @@ class User extends Authenticatable {
     public function class_registrations() {
         return $this->hasMany( ClassRegistration::class, 'socio_id' );
     }
+
+    // Nuevo método para verificar roles
+
+    public function hasRole( $role ) {
+        return $this->role === $role;
+    }
 }

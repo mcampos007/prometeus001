@@ -18,6 +18,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
 
+
+
     <!-- Sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -81,24 +83,6 @@
                     }
                 });
             });
-        });
-    });
-
-    document.getElementById('end-class-btn').addEventListener('click', function() {
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: "¡Esta acción finalizará la clase y no podrá ser revertida!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#f39c12',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, finalizar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Enviar el formulario
-                document.getElementById('end-class-form').submit();
-            }
         });
     });
 </script>

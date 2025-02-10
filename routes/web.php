@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\WorkDayController;
 use App\Http\Controllers\ClassController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +31,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+//Rutas para socios
+Route::middleware(['auth', 'socio'])->group(function () {
+    Route::get('/socio/clases', [ClassController::class, 'showClases'])->name('socio.show-clases');
+    Route::post('/admin/{class}/add-member/{member}', [ClassController::class, 'addMember'])->name('socio.class.addMember');
+    Route::delete('/socio/class/{class}/member/{member}', [ClassController::class, 'removeMember'])->name('socio.class.removeMember');
+
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -55,9 +65,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/class/{class}/end', [ClassController::class, 'end'])->name('class.end');
     Route::post('/class/{class}/setPresent/{member}', [ClassController::class, 'setPresent'])->name('class.setPresent');
     Route::delete('/class/{id}', [ClassController::class, 'destroy'])->name('admin.destroy-clase');
-
-
-
 
     //Route::get('/admin/add-clases', [AdminController::class, 'addClases'])->name('add-clases');
     Route::get('/admin/clases/add', [AdminController::class, 'addClases'])->name('admin.add-clases');
