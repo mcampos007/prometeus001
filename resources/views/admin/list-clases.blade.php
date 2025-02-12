@@ -33,6 +33,20 @@
 
                 </a>
             </div>
+            <div class="flex justify-center py-4">
+
+                <form action="{{ route('admin.list-clases') }}" method="GET" class="flex items-center">
+                    <label for="fecha" class="mr-2 font-bold">Selecciona una fecha:</label>
+                    <input type="date" name="fecha" id="fecha" required {{-- min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                        max="{{ \Carbon\Carbon::now()->addDays(30)->format('Y-m-d') }}" --}}
+                        {{-- value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  --}} class="border rounded px-3 py-2 mr-3 text-black"
+                        value="{{ \Carbon\Carbon::parse($fechaSeleccionada)->format('Y-m-d') }}">
+                    <button type="submit"
+                        class="bg-[#f39c12] text-white px-6 py-2 rounded-lg font-bold hover:bg-[#e67e22]">
+                        Buscar Clases
+                    </button>
+                </form>
+            </div>
             <table class="min-w-full table-auto border-collapse border border-gray-700">
                 <thead class="bg-gray-700">
                     <tr>

@@ -204,24 +204,50 @@ class AdminController extends Controller {
 
     // Mostrar lista de Clases
 
-    public function listClases() {
+    public function listClases(Request $request) {
+
+         //REcuperar datos del socio
+         $socio = User::findOrFail( auth()->user()->id );
+
         // Obtener la fecha actual
-        $today = now()->format( 'Y-m-d' );
+        $fechaSeleccionada = $request->input( 'fecha', now()->format( 'Y-m-d' ) );
 
-        // Obtener las clases del día de hoy y ordenarlas por el horario
-        // $clases = Clase::with( 'profesor' )
-        // ->whereDate( 'horario', $today )
-        // ->orderBy( 'horario', 'asc' ) // Ordenar por horario en orden ascendente
-        // ->get();
+        // Definir la fecha de hoy y el límite ( 7 días a partir de hoy )
+        $hoy = Carbon::today();
+        $limite = Carbon::today()->addDays( 30 );
 
-        // Obtener las clases del día de hoy, incluir el profesor y contar los socios inscritos
-        $clases = Clase::with(['profesor'])
-            ->withCount('class_Registrations') // Contar la cantidad de inscripciones para cada clase
-            ->whereDate('horario', $today)
-            ->orderBy('horario', 'asc') // Ordenar por horario en orden ascendente
-            ->get();
+        // Validar que la fecha seleccionada sea igual o posterior a hoy y menor o igual a 30 días a partir de hoy.
+        if ( Carbon::parse( $fechaSeleccionada )->lt( $hoy ) || Carbon::parse( $fechaSeleccionada )->gt( $limite ) ) {
+            return redirect()->back()->withErrors( 'La fecha debe ser igual o posterior al día actual y menor o igual a 30 días.' );
+        }
+
+        // Construir la consulta básica para las clases del día seleccionado.
+        $query = Clase::with( [ 'profesor' ] )
+        ->withCount( 'class_Registrations' )
+        ->whereDate( 'horario', $fechaSeleccionada )
+        ->orderBy( 'horario', 'asc' );
+
+        // Si la fecha seleccionada es hoy, agregar condición para mostrar solo clases desde la hora actual en adelante.
+
+        if ( $fechaSeleccionada === $hoy->format( 'Y-m-d' ) ) {
+            $query->where( 'horario', '>=', now()->toDateTimeString() );
+        }
+
+        // Ejecutar la consulta.
+        $clases = $query->get();
+
+        // Obtener la clase en la que el socio está inscripto en la fecha seleccionada
+        $inscripciones = ClassRegistration::with(['clase.profesor']) // Cargar clase y profesor
+        ->where('socio_id', $socio->id)
+        ->whereHas('clase', function ($query) use ($fechaSeleccionada) {
+            $query->whereDate('horario', $fechaSeleccionada);
+        })
+        ->get();
+
         // Retornar la vista con la lista de clases
-        return view( 'admin.list-clases', compact( 'clases' ) );
+        return view( 'admin.list-clases', compact( 'clases' , 'fechaSeleccionada', 'socio', 'inscripciones') );
+
+
     }
 
     //Método para llamar a la vista para el alta de una clase
