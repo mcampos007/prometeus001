@@ -19,6 +19,12 @@
         </div>
     @endif
 
+    @if (session('error'))
+        <div class="p-4 mb-6 text-sm text-red-400 bg-red-900 border border-red-400 rounded-lg shadow">
+            {{ session('error') }}
+        </div>
+    @endif
+
     {{-- Mensajes de error --}}
     @if ($errors->any())
         <div class="p-4 mb-6 text-sm text-red-400 bg-red-900 border border-red-400 rounded-lg shadow">
@@ -53,7 +59,7 @@
                         <form id="end-class-form" action="{{ route('class.end', ['class' => $class->id]) }}"
                             method="POST" class="mt-4 mb-4">
                             @csrf
-                            <button type="button" class="px-4 py-2 bg-[#f39c12] text-white rounded hover:bg-[#e67e22]"
+                            <button type="submit" class="px-4 py-2 bg-[#f39c12] text-white rounded hover:bg-[#e67e22]"
                                 id="end-class-btn">
                                 Finalizar Clase
                             </button>

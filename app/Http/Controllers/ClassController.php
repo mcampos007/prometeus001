@@ -12,8 +12,19 @@ class ClassController extends Controller {
     //
 
     public function addMember( $classId, $memberId ) {
+
         $class = Clase::findOrFail( $classId );
         $member = User::findOrFail( $memberId );
+
+        // Verificar si el usuario autenticado tiene el rol de socio
+        if (auth()->user()->role == "socio")
+        {
+            if ($class->estado == "iniciada")
+            {
+                // No se permite agregar el socio a una clase ya inciada
+                return redirect()->back()->with( 'error', 'No es posible inscribirse, la clase ya inició.' );
+            }
+        }
 
         // Obtener la fecha de la clase
         // Extraer solo la fecha del campo horario
@@ -111,6 +122,7 @@ class ClassController extends Controller {
     }
 
     public function end( $classId ) {
+
         $class = Clase::findOrFail( $classId );
 
         if ( $class->estado === 'iniciada' ) {
