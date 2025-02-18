@@ -68,9 +68,11 @@
                     <h1 style="font-size: 1.5rem; color: #f39c12; font-weight: bold; text-align: center;">Bienvenido
                         {{ auth()->user()->name }}</h1>
 
-                    <div style="text-align: center; margin-top: 15px;">
-                        <a href="{{ route('socio.show-clases') }}" class="btn btn-primary">
-                            Ver Clases Disponibles Hoy
+                    <div style="margin-top: 25px;">
+                        <a href="{{ route('socio.show-clases') }}"
+                            class="px-4 py-2 bg-[#f39c12] text-white rounded hover:bg-[#e67e22]">
+                            Ver Clases Disponibles
+                            <i class="fas fa-user-check"></i>
                         </a>
                     </div>
 

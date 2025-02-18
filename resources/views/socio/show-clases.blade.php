@@ -33,7 +33,8 @@
     @if ($inscripciones->isNotEmpty())
         <div class="py-12">
             <div class="content">
-                <div class="flex justify-center py-4">
+                <div class="overflow-x-auto">
+                    {{-- <div class="flex justify-center py-4"> --}}
                     <table class="min-w-full table-auto border-collapse border border-gray-700">
                         <thead class="bg-gray-700">
                             <tr>
@@ -110,6 +111,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    {{-- </div> --}}
                 </div>
 
             </div>
