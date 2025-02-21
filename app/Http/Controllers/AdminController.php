@@ -60,12 +60,28 @@ class AdminController extends Controller {
 
     // Mostrar lista de socios
 
-    public function listSocios() {
-         // Paginar con 10 registros por página
+    public function listSocios(Request $request) {
+        // Obtenener el valor de la búsqueda en search del request
+        $search = $request->input('search');
+
+        //consultar en la base de datos con el filtro de búsqueda
         $socios = User::where('role', 'socio')
+        ->when($search, function ($query) use ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%$search%")
+                  ->orWhere('email', 'LIKE', "%$search%");
+            });
+        })
         ->orderBy('name')
         ->paginate(10);
-        return view( 'admin.socios', compact( 'socios' ) );
+
+
+
+        //  // Paginar con 10 registros por página
+        // $socios = User::where('role', 'socio')
+        // ->orderBy('name')
+        // ->paginate(10);
+        return view( 'admin.socios', compact( 'socios' , 'search') );
     }
 
     public function deleteSocio($id)

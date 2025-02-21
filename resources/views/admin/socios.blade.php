@@ -29,10 +29,32 @@
 
     <div class="py-12">
         <div class="content">
-            <a href="{{ route('add-socios') }}"
+            <div class="flex justify-between items-center">
+                {{-- <h2 class="text-2xl font-bold text-gray-800">Lista de Socios</h2> --}}
+                <a href="{{ route('add-socios') }}"
+                    class="bg-[#f39c12] text-white px-6 py-2 rounded-lg font-bold hover:bg-[#e67e22]">
+                    Agregar Socio
+                </a>
+                <!-- form para busqueda de socios -->
+                <form action="{{ route('list-socios') }}" method="GET" class="mt-4">
+                    <div class="flex items-center">
+                        <input type="text" name="search"
+                            class="px-4 py-2 border border-gray-300 rounded-md text-black"
+                            placeholder="Buscar socio por nombre o email" value="{{ request('search') }}">
+                        <button type="submit"
+                            class="ml-2 bg-[#f39c12] text-white px-4 py-2 rounded-md font-bold hover:bg-[#e67e22]">
+                            Buscar
+                        </button>
+                    </div>
+                </form>
+
+
+            </div>
+            {{-- <a href="{{ route('add-socios') }}"
                 class="ml-3 bg-[#f39c12] text-white px-6 py-2 rounded-lg font-bold hover:bg-[#e67e22]">
                 Agregar Socio
-            </a>
+            </a> --}}
+
 
             <div class="p-6">
                 <table class="min-w-full table-auto border-collapse border border-gray-700">
