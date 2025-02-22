@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\WorkDayController;
 use App\Http\Controllers\ClassController;
+use App\Http\Controllers\WelcomeController;
 
 
 /*
@@ -22,6 +23,8 @@ use App\Http\Controllers\ClassController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/horarios', [WelcomeController::class, 'horarios'])->name('horarios');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -60,3 +60,30 @@ body {
   display: flex;
   gap: 1rem;
 }
+
+#hnuestros {
+  color: white;
+  font-size: 3em;
+}
+
+#hhorarios {
+  color: #f39c12;
+  font-size: 2.5em;
+}
+
+.section001 {
+  display: flex;
+  justify-content: center; /* Centra el contenido en la página */
+  align-items: center; /* Alinea verticalmente */
+  /* height: 100vh; Ajusta la altura al 100% de la pantalla */
+}
+
+.content001 {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espaciado entre el texto y la imagen */
+}
+
+.imgtilde {
+  width: 30px; /* Ajusta el tamaño del tilde según necesites */
+}

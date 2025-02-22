@@ -41,40 +41,25 @@
 
         </div>
     </div>
-
     <div class="container">
         <div id="inicio" class="section">
-            <h2>Bienvenido a Prometeus Gym</h2>
-            <p>Tu lugar para alcanzar el máximo potencial físico y mental.</p>
+            <h2 id="hnuestros">Nuestros</h2>
+            <h2 id="hhorarios">Horarios</h2>
+            <p>LUNES - MIERCOLES - VIERNES</p>
+            <P>8.00 A 13.00 | 15.00 A 21.00</P>
+            <p>MARTES - JUEVES</p>
+            <P>8.00 A 13.00 | 15.00 A 20.00</P>
+            <div class="section001">
+                <div class="content001">
+                    <p>ELEGI EL HORARIO QUE MEJOR SE ADAPTE A TU RUTINA</p>
+                    <img src="{{ asset('img/tilde.png') }}" alt="" class="imgtilde">
+                </div>
+            </div>
         </div>
 
-        <div id="mision" class="section">
-            <h2>Misión</h2>
-            <p>Brindar un espacio donde nuestros socios puedan mejorar su salud física y mental a través del ejercicio y
-                el bienestar.</p>
-        </div>
 
-        <div id="vision" class="section">
-            <h2>Visión</h2>
-            <p>Ser el gimnasio líder en la comunidad, reconocido por su excelencia en servicios e instalaciones.</p>
-        </div>
-
-        <div id="valores" class="section">
-            <h2>Valores</h2>
-            <p>Compromiso, excelencia, innovación y respeto hacia todos nuestros socios.</p>
-        </div>
-
-        <div id="objetivos" class="section">
-            <h2>Objetivos</h2>
-            <p>Ayudar a nuestros socios a alcanzar sus metas de salud y estado físico, ofreciendo programas
-                personalizados y atención de calidad.</p>
-        </div>
-
-        <div id="contacto" class="section">
-            <h2>Contacto</h2>
-            <p>Email: contacto@prometeusgym.com | Teléfono: 123-456-7890</p>
-        </div>
     </div>
+
 
 </body>
 
