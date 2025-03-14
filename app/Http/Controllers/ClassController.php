@@ -214,4 +214,20 @@ class ClassController extends Controller {
 
     }
 
+    public function bloquear( $id ) {
+        $clase = Clase::findOrFail( $id );
+
+        if ( $clase->estado === 'inactiva' ) {
+            $clase->estado = 'pendiente';
+            $clase->save();
+
+            return redirect()->back()->with( 'success', 'La clase ha sido desbloqueada.' );
+        }
+
+        $clase->estado = 'inactiva';
+        $clase->save();
+
+        return redirect()->back()->with( 'success', 'La clase ha sido bloqueada.' );
+    }
+
 }

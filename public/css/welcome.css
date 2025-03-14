@@ -87,3 +87,69 @@ body {
 .imgtilde {
   width: 30px; /* Ajusta el tamaño del tilde según necesites */
 }
+
+.footer {
+  background-color: #222;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer .section {
+  max-width: 400px;
+}
+
+.footer h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.footer p {
+  margin: 10px 0;
+}
+
+.social-icons {
+  margin-top: 10px;
+}
+
+.social-icons a {
+  color: #fff;
+  margin-right: 10px;
+  font-size: 20px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #f39c12;
+}
+
+.copyright {
+  text-align: right;
+  flex-grow: 1;
+}
+
+.copyright a {
+  color: #f39c12;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.copyright a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .footer {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .copyright {
+    text-align: center;
+    margin-top: 10px;
+  }
+}

@@ -20,9 +20,8 @@ use App\Http\Controllers\WelcomeController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', [WelcomeController::class, 'welcome'])->name('welcome');
 Route::get('/horarios', [WelcomeController::class, 'horarios'])->name('horarios');
 
 
@@ -68,6 +67,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/class/{class}/end', [ClassController::class, 'end'])->name('class.end');
     Route::post('/class/{class}/setPresent/{member}', [ClassController::class, 'setPresent'])->name('class.setPresent');
     Route::delete('/class/{id}', [ClassController::class, 'destroy'])->name('admin.destroy-clase');
+    Route::put('/class/{id}', [ClassController::class, 'bloquear'])->name('admin.bloquear-clase');
 
     //Route::get('/admin/add-clases', [AdminController::class, 'addClases'])->name('add-clases');
     Route::get('/admin/clases/add', [AdminController::class, 'addClases'])->name('admin.add-clases');

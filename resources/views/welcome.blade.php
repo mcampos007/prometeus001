@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prometeus Gym</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
     <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
 </head>
 
@@ -14,7 +17,8 @@
     <div class="navbar">
         {{-- <img src="{{ asset('img/logo.jpg') }}" alt="Logo Prometeus Gym"> --}}
         <div class="logo">
-            <a href="#"><img src="{{ asset('img/logo.jpg') }}" alt="Prometeus Gym Logo" style="height: 100px;"></a>
+            <a href="#"><img src="{{ asset('img/logo.jpg') }}" alt="Prometeus Gym Logo"
+                    style="height: 100px;"></a>
         </div>
 
         <div class="menu">
@@ -70,9 +74,26 @@
                 personalizados y atención de calidad.</p>
         </div>
 
+
+    </div>
+
+    <div class="footer">
         <div id="contacto" class="section">
-            <h2>Contacto</h2>
-            <p>Email: contacto@prometeusgym.com | Teléfono: 123-456-7890</p>
+            <h2>Prometeus Gym</h2>
+            <p>Gracias por visitar nuestro sitio web. Contáctanos para descubrir cómo podemos ayudarte a mejorar tu
+                calidad de vida.</p>
+
+            <div class="social-icons">
+                <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>Powered by <a href="https://infocam.com.ar" target="_blank">Infocam</a> &copy; 2025 Todos los derechos
+                reservados</p>
         </div>
     </div>
 

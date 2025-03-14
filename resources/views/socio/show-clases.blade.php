@@ -177,6 +177,8 @@
                                             class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 text-white bg-black rounded py-1 px-2 text-xs opacity-0 group-hover:opacity-100 transition-opacity">
                                         </span>
                                     </a> --}}
+
+
                                         <form
                                             action="{{ route('socio.class.addMember', ['class' => $clase->id, 'member' => auth()->user()->id]) }}"
                                             method="POST">
@@ -184,8 +186,9 @@
 
                                             <button type="submit"
                                                 class="px-4 py-2 rounded-md bg-[#f39c12] text-white text-xs hover:bg-[#e67e22]"
-                                                title="Inscribirse">
+                                                title="Inscribirse" @disabled(ucfirst($clase->estado) !== 'Pendiente')>
                                                 <i class="fas fa-user-plus"></i>
+
                                                 <!-- Cambié text-xl a text-lg -->
                                             </button>
 

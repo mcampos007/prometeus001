@@ -109,6 +109,20 @@
 
                                     </button>
                                 </form>
+
+                                <!-- Formulario para bloquear la clase -->
+                                <form action="{{ route('admin.bloquear-clase', $clase->id) }}" method="POST"
+                                    class="inline">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit"
+                                        class=" bg-yellow-400 text-white px-4 py-2 rounded-md font-bold text-xs hover:bg-yellow-700 transition duration-150 "
+                                        onclick="return confirm('¿Estás seguro de que deseas bloquear esta clase? Esta acción no se puede deshacer.')"
+                                        title="Bloquear/Desbloquear clase">
+                                        <i class="fas fa-lock"></i>
+
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
