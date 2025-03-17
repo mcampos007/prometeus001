@@ -230,4 +230,35 @@ class ClassController extends Controller {
         return redirect()->back()->with( 'success', 'La clase ha sido bloqueada.' );
     }
 
+    public function bloqueardia(){
+        $fechaSeleccionada = Carbon::today();
+
+        return view('admin.clasesbloqueardia', compact('fechaSeleccionada'));
+    }
+
+    public function bloquearclasedia(Request $request){
+        $request->validate([
+            'fecha'=>'required|date'
+        ]);
+
+        $fecha = Carbon::parse($request->fecha)->format('Y-m-d') ;
+
+        $clases = Clase::whereDate('horario', $fecha)->get();
+
+        if ($clases->isEmpty()){
+
+            return back()->with('error', 'No se han encontrado clases para la fecha');
+        }
+
+       // Cambiar el estado de cada clase
+        foreach ($clases as $clase) {
+            $nuevoEstado = $clase->estado === 'pendiente' ? 'inactiva' : 'pendiente';
+            $clase->update(['estado' => $nuevoEstado]);
+        }
+
+        //return back()->with('success', "Las clases del día $fecha han cambiado de estado.");`
+        return redirect(route('admin.list-clases'))->with('success', "Las clases del día $fecha han cambiado de estado.");
+
+    }
+
 }

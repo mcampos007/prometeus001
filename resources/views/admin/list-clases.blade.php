@@ -32,6 +32,20 @@
                     Agregar Clase para el mes
 
                 </a>
+                <a href="{{ route('admin.bloqueardia') }}"
+                    class="ml-3  bg-red-500 text-white px-6 py-2 rounded-lg font-bold hover:bg-red-900">
+                    <i class="fas fa-lock"></i>
+                    <span>Bloquear Todo un día</span>
+
+                </a>
+                {{-- <form action="{{ route('admin.bloquear-day-clase', $clase->id) }}" method="POST" class="inline">
+                    @csrf
+                    @method('PUT')
+                    <button class="ml-3  bg-red-500 text-white px-6 py-2 rounded-lg font-bold hover:bg-red-900"
+                        type="submit" value="Bloquear Todo el día">
+                        <i class="fas fa-lock"></i><span> Bloquear Todo el Día</span>
+                    </button>
+                </form> --}}
             </div>
             <div class="flex justify-center py-4">
 

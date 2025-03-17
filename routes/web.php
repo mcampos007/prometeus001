@@ -68,6 +68,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/class/{class}/setPresent/{member}', [ClassController::class, 'setPresent'])->name('class.setPresent');
     Route::delete('/class/{id}', [ClassController::class, 'destroy'])->name('admin.destroy-clase');
     Route::put('/class/{id}', [ClassController::class, 'bloquear'])->name('admin.bloquear-clase');
+    Route::get('/bloquearclasedia', [ClassController::class, 'bloqueardia'])->name('admin.bloqueardia');
+    Route::put('/classbloqueardia', [ClassController::class, 'bloquearclasedia'])->name('admin.bloquear-day-clase');
 
     //Route::get('/admin/add-clases', [AdminController::class, 'addClases'])->name('add-clases');
     Route::get('/admin/clases/add', [AdminController::class, 'addClases'])->name('admin.add-clases');
