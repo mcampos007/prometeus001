@@ -37,7 +37,7 @@
                             {{-- <a href="#inicio">Inicio</a> --}}
                             <a href="{{ route('horarios') }}">Horarios</a>
                             <a href="#nosotros">Nosotros</a>
-                            <a href="#contacto">Contacto</a>
+                            <a href="{{ route('contacto') }}">Contacto</a>
                         @endif
                     @endauth
                 </div>

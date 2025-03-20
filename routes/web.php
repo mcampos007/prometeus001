@@ -22,7 +22,9 @@ use App\Http\Controllers\WelcomeController;
 
 
 Route::get('/', [WelcomeController::class, 'welcome'])->name('welcome');
+Route::get('/contacto', [WelcomeController::class, 'contacto'])->name('contacto');
 Route::get('/horarios', [WelcomeController::class, 'horarios'])->name('horarios');
+Route::post('/contacto/send', [WelcomeController::class, 'sendcontacto'])->name('contacto.send');
 
 
 Route::get('/dashboard', function () {
