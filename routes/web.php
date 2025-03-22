@@ -22,8 +22,9 @@ use App\Http\Controllers\WelcomeController;
 
 
 Route::get('/', [WelcomeController::class, 'welcome'])->name('welcome');
-Route::get('/contacto', [WelcomeController::class, 'contacto'])->name('contacto');
 Route::get('/horarios', [WelcomeController::class, 'horarios'])->name('horarios');
+Route::get('/nosotros', [WelcomeController::class, 'nosotros'])->name('nosotros');
+Route::get('/contacto', [WelcomeController::class, 'contacto'])->name('contacto');
 Route::post('/contacto/send', [WelcomeController::class, 'sendcontacto'])->name('contacto.send');
 
 

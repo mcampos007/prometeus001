@@ -8,17 +8,24 @@ use Illuminate\Support\Facades\Mail;
 class WelcomeController extends Controller {
 
     public function welcome() {
-        return view ( 'welcome' );
+            $titulo = "Prometeo Gym Home Page";
+        return view ( 'welcome' , compact('titulo'));
     }
     //
 
     public function horarios() {
-        return view ( 'horarios' );
+        $titulo = "Nuestros horarios";
+        return view ( 'horarios' , compact('titulo'));
+    }
+
+    public function nosotros(){
+        $titulo = "Sobre Nosotros";
+        return view('nosotros', compact('titulo'));
     }
 
     public function contacto() {
-        $title = 'Contacto';
-        return view ( 'contacto', compact( 'title' ) );
+        $titulo = 'Contacto';
+        return view ( 'contacto', compact( 'titulo' ) );
     }
 
     public function sendcontacto( Request $request ) {
@@ -56,4 +63,6 @@ class WelcomeController extends Controller {
         // Redirigir con un mensaje de éxito
         return back()->with('success', '¡Tu mensaje ha sido enviado correctamente!');
     }
+
+
 }
