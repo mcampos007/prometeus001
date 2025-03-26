@@ -13,3 +13,6 @@ deployment:
     - /bin/cp -R test $DEPLOYPATH
     - /bin/cp -R vendor $DEPLOYPATH
     - /bin/cp -R ./* $DEPLOYPATH
+
+
+brgjjnix

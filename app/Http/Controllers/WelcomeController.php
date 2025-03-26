@@ -29,7 +29,7 @@ class WelcomeController extends Controller {
     }
 
     public function sendcontacto( Request $request ) {
-        $mailContact = 'consultas@prometeusgym.com.ar';
+        $mailContact = 'mcampos@infocam.com.ar';
         // Validar los datos del formulario
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
