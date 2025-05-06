@@ -7,6 +7,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\WorkDayController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\PaymentController;
+
 
 
 /*
@@ -89,6 +91,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 
 });
+
+//Rutas para pagos
+Route::get('/payments/create', [PaymentController::class, 'create'])->name('payments.create');
+Route::post('/payments/store', [PaymentController::class, 'store'])->name('payments.store');
+Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index'); // si querés ver una lista
+Route::get('/admin/payments/{user}/history', [PaymentController::class, 'history'])->name('payments.history');
+Route::get('/payments/{user}/export/pdf', [PaymentController::class, 'exportPdf'])->name('payments.export.pdf');
+Route::get('/payments/{user}/export/excel', [PaymentController::class, 'exportExcel'])->name('payments.export.excel');
+
+
 
 /* Route::middleware(['auth', 'can:admin-only'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('work_days', WorkDayController::class);
